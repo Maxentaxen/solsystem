@@ -13,7 +13,7 @@ class planet{
         this.orbitalRadius = orbitalRadius;
         this.orbitalPeriod = orbitalPeriod;
         this.name = name;
-        this.picturepath = `/img/${picture}`;
+        this.picturepath = `/planetthing/img/${picture}`;
         this.angle = 0;
         planets.push(this);
 
