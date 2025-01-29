@@ -38,3 +38,15 @@ body {
     position: absolute;
     aspect-ratio: 1;
 }
+
+.button {
+    position:absolute;
+    left: 50%;
+    top:50%;
+}
+
+#zawarudo {
+    position: absolute;
+    top: 45%;
+    left:50%;
+}

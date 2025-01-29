@@ -1,12 +1,20 @@
 let solar_system = document.getElementById('solar-system');
 let solarSystemStyle = getComputedStyle(solar_system);
 let solarSystemWidth = parseInt(solarSystemStyle.width);
+let button = document.querySelector('.button');
+let sound = new Audio('/planetthing/img/madeinheaven.mp3');
+let sound2 = new Audio('/planetthing/img/za-warudo.mp3');
 let planets = [];
-
+let angleConstant = 360
+let isPaused = false;
 const earthRadius      = 10;
 const earthOrbitRadius = 100;
-const earth_angle      = -(Math.PI / 360);
+let earth_angle      = -(Math.PI / angleConstant);
+let animationFrameId
+let animation2FrameId
+let pauseDuration = 9000;
 
+button.addEventListener('click', madeInHeaven);
 class planet{
     constructor(name, radius, orbitalRadius, orbitalPeriod, picture) {
         this.radius = radius;
@@ -49,8 +57,44 @@ let mars    = new planet('mars', 0.53, 1.52, 1.88, 'mars.png');
 let jupiter = new planet('jupiter', 11.21, 5.2, 11.86, 'jupiter.png');
 
 function animate() {
-    planets.forEach(instance => instance.updatePos());
-    requestAnimationFrame(animate);
+    if (!isPaused) {
+        planets.forEach(instance => instance.updatePos());
+    }
+    animationFrameId = requestAnimationFrame(animate);
 }
+function playAudio() {
+    sound.play();
+}
+
+
+function pauseAnimation() {
+    if (!isPaused) {
+        isPaused = true;
+
+        // Cancel the current animation frame
+        cancelAnimationFrame(animationFrameId);
+        cancelAnimationFrame(animation2FrameId)
+        sound2.play();
+        angleConstant = 360;
+        console.log(angleConstant);
+        // Resume  after the pause duration
+        setTimeout(() => {
+            isPaused = false;
+            animate(); // Restart the animation loop
+            madeInHeaven();
+        }, pauseDuration);
+    }
+}
+
+
+function madeInHeaven() {
+    if (!isPaused) {
+    angleConstant /= 1.01;
+    console.log(angleConstant);
+    earth_angle      = -(Math.PI / angleConstant);
+    } 
+    animation2FrameId = requestAnimationFrame(madeInHeaven);
+}
+
 
 animate();
